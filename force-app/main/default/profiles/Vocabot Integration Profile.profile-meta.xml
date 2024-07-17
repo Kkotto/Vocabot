@@ -38,6 +38,14 @@
         <field>Error_Log__c.Timestamp__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Key_Word__mdt.Key_Word__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <layoutAssignments>
+        <layout>Key_Word__mdt-Key Word Layout</layout>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Error_Log__c-Error Log Layout</layout>
     </layoutAssignments>
