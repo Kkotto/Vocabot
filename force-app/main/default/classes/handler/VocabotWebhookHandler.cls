@@ -1,11 +1,13 @@
 public without sharing class VocabotWebhookHandler {
 
     public final String PROCESS_NAME = VocabotWebhookHandler.class.getName();
+
+    Map<String, Bot_Command__mdt> commands = Bot_Command__mdt.getAll();
     private LogHandler logger = new LogHandler();
 
     public void handleUpdate(UpdateWrapper receivedUpdate) {
         try {
-            if (!VocabotWebhookHelper.shouldProceed(receivedUpdate)) {
+            if (!VocabotWebhookHelper.shouldProceed(receivedUpdate, commands)) {
                 return;
             }
 

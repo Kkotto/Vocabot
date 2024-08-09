@@ -20,15 +20,27 @@ public with sharing class VocabotWebhookHelper {
         }
     }
 
-    public static Boolean shouldProceed(UpdateWrapper receivedUpdate) {
+    public static Boolean shouldProceed(UpdateWrapper receivedUpdate, Map<String, Bot_Command__mdt> commands) {
         if (receivedUpdate.message.chat.type.equals('private')) {
-            return true;
+            return checkPrivateMessageCommand(receivedUpdate.message.text, commands);
         }
 
-        Map<String, Bot_Command__mdt> commands = Bot_Command__mdt.getAll();
+        return checkGroupMessageCommand(receivedUpdate.message.text, commands);
+    }
+
+    private static Boolean checkPrivateMessageCommand(String text, Map<String, Bot_Command__mdt> commands) {
+        for (Bot_Command__mdt command : commands.values()) {
+            if (command.Is_Active__c && (text.startsWith(command.Command__c) || text.startsWith(command.Text_Command__c))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static Boolean checkGroupMessageCommand(String text, Map<String, Bot_Command__mdt> commands) {
         String commandPostfix = Bot_Prefix__mdt.getInstance(Active_Bot_Name__c.getInstance().Bot_Name__c).Prefix__c;
         for (Bot_Command__mdt command : commands.values()) {
-            if (command.Is_Active__c && receivedUpdate.message.text.startsWith(command.Command__c + commandPostfix)) {
+            if (command.Is_Active__c && text.startsWith(command.Command__c + commandPostfix)) {
                 return true;
             }
         }
