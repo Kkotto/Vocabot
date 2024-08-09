@@ -20,30 +20,34 @@ public with sharing class VocabotWebhookHelper {
         }
     }
 
-    public static Boolean shouldProceed(UpdateWrapper receivedUpdate, Map<String, Bot_Command__mdt> commands) {
+    public static String getCommandHandlerMethodName(UpdateWrapper receivedUpdate, Map<String, Bot_Command__mdt> commands) {
         if (receivedUpdate.message.chat.type.equals('private')) {
-            return checkPrivateMessageCommand(receivedUpdate.message.text, commands);
+            return getPrivateMessageCommandHandlerMethod(receivedUpdate.message.text, commands);
         }
 
-        return checkGroupMessageCommand(receivedUpdate.message.text, commands);
+        return getGroupMessageCommandHandlerMethod(receivedUpdate.message.text, commands);
     }
 
-    private static Boolean checkPrivateMessageCommand(String text, Map<String, Bot_Command__mdt> commands) {
+    private static String getPrivateMessageCommandHandlerMethod(String text, Map<String, Bot_Command__mdt> commands) {
         for (Bot_Command__mdt command : commands.values()) {
             if (command.Is_Active__c && (text.startsWith(command.Command__c) || text.startsWith(command.Text_Command__c))) {
-                return true;
+                return command.Method__c;
             }
         }
-        return false;
+        return Consts.BLANK_VALUE;
     }
 
-    private static Boolean checkGroupMessageCommand(String text, Map<String, Bot_Command__mdt> commands) {
+    private static String getGroupMessageCommandHandlerMethod(String text, Map<String, Bot_Command__mdt> commands) {
         String commandPostfix = Bot_Prefix__mdt.getInstance(Active_Bot_Name__c.getInstance().Bot_Name__c).Prefix__c;
         for (Bot_Command__mdt command : commands.values()) {
             if (command.Is_Active__c && text.startsWith(command.Command__c + commandPostfix)) {
-                return true;
+                return command.Method__c;
             }
         }
-        return false;
+        return Consts.BLANK_VALUE;
+    }
+
+    public static Boolean shouldProceedCommandHandling(String handlerMethodName) {
+        return !handlerMethodName.equals(Consts.BLANK_VALUE);
     }
 }

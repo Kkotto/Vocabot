@@ -5,9 +5,12 @@ public without sharing class VocabotWebhookHandler {
     Map<String, Bot_Command__mdt> commands = Bot_Command__mdt.getAll();
     private LogHandler logger = new LogHandler();
 
+    private String commandHandlerMethodName;
+
     public void handleUpdate(UpdateWrapper receivedUpdate) {
         try {
-            if (!VocabotWebhookHelper.shouldProceed(receivedUpdate, commands)) {
+            commandHandlerMethodName = VocabotWebhookHelper.getCommandHandlerMethodName(receivedUpdate, commands);
+            if (!VocabotWebhookHelper.shouldProceedCommandHandling(commandHandlerMethodName)) {
                 return;
             }
 
