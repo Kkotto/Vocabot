@@ -9,7 +9,8 @@ global class VocabotWebhook {
     global static void receiveMessage() {
         try {
             String receivedData = RestContext.request.requestBody.toString();
-            logger.log(PROCCESS, 'Recieved: ' + receivedData);
+            TelegramUpdateMessageWrapper message = (TelegramUpdateMessageWrapper) JSON.deserialize(receivedData, TelegramUpdateMessageWrapper.class);
+            logger.log(PROCCESS, message);
         } catch (Exception e) {
             logger.log(PROCCESS, Consts.MESSAGE_ERROR_OCCURRED, e.getStackTraceString());
         } finally {
