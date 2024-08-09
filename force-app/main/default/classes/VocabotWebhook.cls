@@ -1,18 +1,18 @@
 @RestResource(urlMapping = '/vocabotWebhook')
 global class VocabotWebhook {
     
-    private static final String PROCCESS = VocabotWebhook.class.getName();
+    private static final String PROCCESS_NAME = VocabotWebhook.class.getName();
 
     private static LogHandler logger = new LogHandler();
 
     @HttpPost
     global static void receiveMessage() {
         try {
-            String receivedData = RestContext.request.requestBody.toString();
-            TelegramUpdateMessageWrapper message = (TelegramUpdateMessageWrapper) JSON.deserialize(receivedData, TelegramUpdateMessageWrapper.class);
-            logger.log(PROCCESS, message);
+            String receivedData = RestContext.request.requestBody.toString().replaceFirst('from', 'user_from');
+            UpdateWrapper message = (UpdateWrapper) JSON.deserialize(receivedData, UpdateWrapper.class);
+            logger.log(PROCCESS_NAME, message);
         } catch (Exception e) {
-            logger.log(PROCCESS, Consts.MESSAGE_ERROR_OCCURRED, e.getStackTraceString());
+            logger.log(PROCCESS_NAME, Consts.MESSAGE_ERROR_OCCURRED, e.getStackTraceString());
         } finally {
             logger.save();
         }
