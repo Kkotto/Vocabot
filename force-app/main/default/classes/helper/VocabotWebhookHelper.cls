@@ -20,7 +20,7 @@ public with sharing class VocabotWebhookHelper {
         }
     }
 
-    public static Boolean shouldProcess(UpdateWrapper receivedUpdate) {
+    public static Boolean shouldProceed(UpdateWrapper receivedUpdate) {
         if (receivedUpdate.message.chat.type.equals('private')) {
             return true;
         }

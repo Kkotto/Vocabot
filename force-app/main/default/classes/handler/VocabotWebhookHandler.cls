@@ -1,29 +1,25 @@
 public without sharing class VocabotWebhookHandler {
 
-    public static final String PROCESS_NAME = VocabotWebhookHandler.class.getName();
-    private static LogHandler logger = new LogHandler();
+    public final String PROCESS_NAME = VocabotWebhookHandler.class.getName();
+    private LogHandler logger = new LogHandler();
 
-    public VocabotWebhookHandler(UpdateWrapper receivedUpdate) {
+    public void handleUpdate(UpdateWrapper receivedUpdate) {
         try {
-            if (VocabotWebhookHelper.shouldProcess(receivedUpdate)) {
-                logger.log(PROCESS_NAME, 'yes should');
-                handleUser(receivedUpdate.message.user_from);
-            } else {
-                logger.log(PROCESS_NAME, 'nop');
+            if (!VocabotWebhookHelper.shouldProceed(receivedUpdate)) {
+                return;
             }
-       } catch (Exception e) {
-            logger.log(PROCESS_NAME, e.getMessage(), e.getStackTraceString());
-       } finally {
-            logger.save();
-       }
 
+            handleUser(receivedUpdate);
+        } catch (Exception e) {
+            logger.log(PROCESS_NAME, e.getMessage(), e.getStackTraceString());
+        } finally {
+            logger.save();
+        }
     }
 
-    private void handleUser(UserWrapper user) {
-        if ([SELECT Id FROM Telegram_User__c WHERE Id__c = :user.id].isEmpty()) {
-            logger.log('um : ' + [SELECT Id FROM Telegram_User__c]);
-            logger.log('wth: ' + user.id);
-            VocabotWebhookHelper.createTelegramUser(user);
+    private void handleUser(UpdateWrapper receivedUpdate) {
+        if ([SELECT Id FROM Telegram_User__c WHERE Id__c = :receivedUpdate.message.user_from.id].isEmpty()) {
+            VocabotWebhookHelper.createTelegramUser(receivedUpdate.message.user_from);
         }
     }
 }

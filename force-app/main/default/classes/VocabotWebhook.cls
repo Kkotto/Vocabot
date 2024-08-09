@@ -9,7 +9,9 @@ global class VocabotWebhook {
         try {
             String receivedData = RestContext.request.requestBody.toString().replaceFirst('from', 'user_from').replaceFirst('date', 'unix_datetime');
             UpdateWrapper receivedUpdate = (UpdateWrapper) JSON.deserialize(receivedData, UpdateWrapper.class);
-            VocabotWebhookHandler handler = new VocabotWebhookHandler(receivedUpdate);
+
+            VocabotWebhookHandler handler = new VocabotWebhookHandler();
+            handler.handleUpdate(receivedUpdate);
         } catch (Exception e) {
             logger.log(PROCCESS_NAME, e.getMessage(), e.getStackTraceString());
         } finally {
