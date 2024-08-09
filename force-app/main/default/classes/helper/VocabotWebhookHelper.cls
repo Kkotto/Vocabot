@@ -19,4 +19,12 @@ public with sharing class VocabotWebhookHelper {
             logger.save();
         }
     }
+
+    public static Boolean shouldContinue(UpdateWrapper receivedUpdate) {
+        if (receivedUpdate.message.chat.type.equals('private')) {
+            return true;
+        }
+
+
+    }
 }
