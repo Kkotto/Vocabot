@@ -31,6 +31,9 @@
     <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
     <label>Vocabot Management</label>
     <navType>Standard</navType>
+    <tabs>Telegram_User__c</tabs>
+    <tabs>Collins_Dictionary__c</tabs>
+    <tabs>Search_Log__c</tabs>
     <tabs>Error_Log__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Vocabot_Management_UtilityBar</utilityBar>
