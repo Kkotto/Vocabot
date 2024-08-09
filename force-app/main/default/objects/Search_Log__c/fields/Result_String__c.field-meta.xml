@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Result_String__c</fullName>
+    <description>An array of entries sorted the same way as in the main dictionary (empty if no results
+are found).</description>
+    <externalId>false</externalId>
+    <label>Result String</label>
+    <length>131072</length>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

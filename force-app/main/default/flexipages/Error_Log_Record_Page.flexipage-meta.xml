@@ -60,8 +60,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Stack_Trace__c</fieldItem>
-                <identifier>RecordStack_Trace_cField</identifier>
+                <fieldItem>Record.Message__c</fieldItem>
+                <identifier>RecordMessage_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-a0189561-69c9-4d5d-b08c-317955cd17e2</name>
@@ -84,8 +84,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Message__c</fieldItem>
-                <identifier>RecordMessage_cField</identifier>
+                <fieldItem>Record.Stack_Trace__c</fieldItem>
+                <identifier>RecordStack_Trace_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-262fc50a-7805-42db-a457-ed59c781ea0f</name>
