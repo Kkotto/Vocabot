@@ -20,11 +20,18 @@ public with sharing class VocabotWebhookHelper {
         }
     }
 
-    public static Boolean shouldContinue(UpdateWrapper receivedUpdate) {
+    public static Boolean shouldProcess(UpdateWrapper receivedUpdate) {
         if (receivedUpdate.message.chat.type.equals('private')) {
             return true;
         }
 
-
+        Map<String, Bot_Command__mdt> commands = Bot_Command__mdt.getAll();
+        String commandPostfix = Bot_Prefix__mdt.getInstance(Active_Bot_Name__c.getInstance().Bot_Name__c).Prefix__c;
+        for (Bot_Command__mdt command : commands.values()) {
+            if (command.Is_Active__c && receivedUpdate.message.text.startsWith(command.Command__c + commandPostfix)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
