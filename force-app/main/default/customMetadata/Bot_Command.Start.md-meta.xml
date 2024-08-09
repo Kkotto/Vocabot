@@ -18,4 +18,8 @@
         <field>Method__c</field>
         <value xsi:type="xsd:string">handleStartCommand</value>
     </values>
+    <values>
+        <field>Text_Command__c</field>
+        <value xsi:type="xsd:string">start</value>
+    </values>
 </CustomMetadata>
